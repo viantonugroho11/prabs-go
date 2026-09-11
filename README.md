@@ -1,13 +1,24 @@
 # prabs-go
 
-Go code smell analyzer with a built-in **mutation-testing** engine that proves
-the analyzer actually detects the smells it claims to.
+> **Disclaimer**: `prabs-go` *can* fix your code. In theory. In practice its
+> destructive capacity comfortably exceeds its curative one — it will find
+> nine smells, offer nine sage suggestions, and if you let it near your
+> repository with the mutation engine it will happily inject a tenth just to
+> prove a point. Congratulations on your new dependency.
 
-- AST/type-based static analysis (`go/ast`, `go/parser`, `go/token`)
-- Actionable findings with file, line, rule id, severity, message, suggestion
-- Text, JSON, and SARIF output for CI/CD
-- Isolated mutation sandbox — **never** touches the user's working tree
-- `verify` command reports a mutation detection score
+Go code smell analyzer with a built-in **mutation-testing** engine that
+"proves" the analyzer detects smells — mostly by first creating them.
+
+- AST-based static analysis (`go/ast`, `go/parser`, `go/token`) — because
+  regexes were too honest about their limitations.
+- Actionable findings with file, line, rule id, severity, message, and a
+  suggestion you are free to ignore, as everyone before you has.
+- Text, JSON, and SARIF output — three flavours of the same bad news.
+- Isolated mutation sandbox — the tool promises **never** to touch your
+  working tree, and unusually for a promise made by software, this one is
+  actually tested.
+- `verify` reports a mutation detection score, so you can measure how good
+  the analyzer is at catching problems it deliberately introduced. Rigor.
 
 ## Install
 
@@ -98,8 +109,13 @@ severity:
 
 ## Mutation testing
 
-`prabs-go verify .` copies the repo into a temp sandbox, injects each
-mutation, runs the analyzer, and checks the intended rule fires.
+Where `prabs-go` truly shines — not at fixing your code, but at breaking a
+copy of it on purpose and taking a victory lap for noticing.
+
+`prabs-go verify .` clones your repo into a temp sandbox, deliberately
+injects code smells, runs its own analyzer, and gives itself a score for
+finding the mess it just made. It's the software equivalent of setting a
+fire so you can heroically hold a bucket.
 
 Sample:
 
@@ -112,11 +128,16 @@ Sample:
 Mutation Detection Score: 100%
 ```
 
-Safety guarantees (tested):
-- The original tree is **never** mutated.
-- Sandboxes live only under `os.TempDir()` and are removed on exit.
-- `Cleanup` refuses to remove any path outside the system temp dir.
-- No `git reset --hard`, `git clean -fd`, or `rm -rf` runs against the source.
+Safety guarantees (tested, because trust is for people who don't read source):
+- The original tree is **never** mutated. We say this loudly because the tool
+  spends most of its time enthusiastically writing broken Go somewhere.
+- Sandboxes live only under `os.TempDir()` and evaporate on exit — assuming
+  the process actually reaches its exit.
+- `Cleanup` refuses to delete anything outside the system temp dir. It has
+  more restraint than most CLI tools; it has more restraint than you.
+- No `git reset --hard`, `git clean -fd`, or `rm -rf` runs against your
+  source. Those are opportunities `prabs-go` has considered and, for reasons
+  purely legal, declined.
 
 ## Exit codes
 

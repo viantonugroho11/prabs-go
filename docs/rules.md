@@ -1,5 +1,10 @@
 # Rule catalog
 
+Nine rules. Nine polite ways for `prabs-go` to inform you that the code you
+shipped last Friday is, in fact, exactly what it looks like. Thresholds are
+configurable, because taste is a spectrum and denial is a river.
+
+
 ## PRABS-CPLX-001 — High Cyclomatic Complexity
 Severity: **high**. Counts branches: `if`, `for`, `range`, `case`, `select`, `&&`, `||`.
 Default threshold: 10.

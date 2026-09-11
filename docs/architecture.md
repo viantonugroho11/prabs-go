@@ -1,5 +1,11 @@
 # Architecture
 
+A tour of a small tool with strong opinions about your code and a slightly
+larger appetite for wrecking a temporary copy of it. Read on to learn how a
+static analyzer justifies its existence by writing worse code than yours,
+then finding it, then billing that as quality assurance.
+
+
 ```
 cmd/prabs                 CLI entry point
 internal/analyzer         Rule interface, registry, driver
