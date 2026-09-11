@@ -1,0 +1,35 @@
+version: 1
+
+rules:
+  PRABS-CPLX-001:
+    enabled: true
+    threshold: 10
+  PRABS-FUNC-001:
+    enabled: true
+    threshold: 100
+  PRABS-FUNC-002:
+    enabled: true
+    threshold: 5
+  PRABS-NEST-001:
+    enabled: true
+    threshold: 4
+  PRABS-DUP-001:
+    enabled: true
+    min_statements: 5
+  PRABS-ERR-001:
+    enabled: true
+  PRABS-ERR-002:
+    enabled: true
+  PRABS-NAME-001:
+    enabled: true
+  PRABS-FILE-001:
+    enabled: true
+    threshold: 500
+
+exclude:
+  - vendor
+  - generated
+  - testdata
+
+severity:
+  fail_on: high
